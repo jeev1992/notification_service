@@ -25,6 +25,15 @@ exports.acceptNotificationRequest = async (req, res) => {
     }
 }
 
-exports.getNotification = (req, res) => {
-
+exports.getNotification = async (req, res) => {
+    try {
+        let ticket = await ticketNotificationModel.findById(req.params.id);
+        if (ticket) {
+          return res.status(200).send(ticket);
+        } else {
+          return res.status(200).send("ticket not found");
+        }
+      } catch (err) {
+        return res.status(500).send("Internal Error");
+      }
 }
